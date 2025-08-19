@@ -3,6 +3,7 @@ using Million.Application.Properties.Ports;
 using Million.Application.Properties.Services;
 using Million.Infrastructure.Mongo;
 using Million.Infrastructure.Mongo.Repositories;
+using Million.WebApi.Startup;
 
 namespace Million.WebApi
 {
@@ -13,7 +14,7 @@ namespace Million.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddHostedService<SeedMongoHostedService>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

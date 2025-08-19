@@ -1,28 +1,60 @@
-﻿using Million.Domain.Entities;
-using Million.Infrastructure.Mongo.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Million.Domain.Entities;
+using Million.Infrastructure.Mongo.Models;
 
-namespace Million.Infrastructure.Mongo.Mappers
+namespace Million.Infrastructure.Mongo.Mappers;
+
+internal static class PropertyDocumentMapper
 {
-    internal static class PropertyDocumentMapper
+    /// Document (Mongo) -> Domain
+    /// Toma la imagen habilitada; si no hay, la primera; si no existen, string.Empty.
+    public static Property ToDomain(PropertyDocument d)
     {
-        public static Property ToDomain(PropertyDocument d)
-        => Property.Rehydrate(d.Id, d.IdOwner, d.Name, d.Address, d.Price, d.ImageUrl);
+        if (d is null) throw new ArgumentNullException(nameof(d));
 
-        public static PropertyDocument FromDomain(Property p) => new()
+        var imageUrl =
+            d.Images?.FirstOrDefault(i => i.Enabled)?.File
+            ?? d.Images?.FirstOrDefault()?.File
+            ?? string.Empty;
+
+        return Property.Rehydrate(
+            id: d.Id,
+            idOwner: d.IdOwner,
+            name: d.Name,
+            address: d.Address,
+            price: d.Price,
+            imageUrl: imageUrl
+        );
+    }
+
+    /// Domain -> Document
+    /// Si el dominio trae ImageUrl, lo mapeamos a Images con una imagen Enabled.
+    public static PropertyDocument FromDomain(Property p)
+    {
+        if (p is null) throw new ArgumentNullException(nameof(p));
+
+        var doc = new PropertyDocument
         {
+            // ⚠️ Si tu PropertyDocument.Id lo genera Mongo (ObjectId), elimina esta línea.
             Id = p.Id,
             IdOwner = p.IdOwner,
             Name = p.Name,
             Address = p.Address,
             Price = p.Price,
-            ImageUrl = p.ImageUrl
+            Images = new List<PropertyImageDocument>()
         };
+
+        if (!string.IsNullOrWhiteSpace(p.ImageUrl))
+        {
+            doc.Images.Add(new PropertyImageDocument
+            {
+                File = p.ImageUrl,
+                Enabled = true
+            });
+        }
+
+        return doc;
     }
 }

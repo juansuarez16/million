@@ -10,15 +10,21 @@ namespace Million.Infrastructure.Mongo.Models
 {
     public sealed class PropertyDocument
     {
-        [BsonId] public ObjectId ObjectId { get; set; }
-
-        [BsonRepresentation(BsonType.String)]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = default!;
 
         public string IdOwner { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string Address { get; set; } = default!;
         public decimal Price { get; set; }
-        public string ImageUrl { get; set; } = default!;
+        public string CodeInternal { get; set; } = default!;
+        public int Year { get; set; }
+
+        // 🔹 Agregamos imágenes
+        public List<PropertyImageDocument> Images { get; set; } = new();
+
+        // 🔹 Ya existían las trazas
+        public List<PropertyTraceDocument> Traces { get; set; } = new();
     }
 }

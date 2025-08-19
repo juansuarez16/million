@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Million.Application\Million.Application.csproj" />
     <ProjectReference Include="..\Million.Domain\Million.Domain.csproj" />
+    <InternalsVisibleTo Include="Million.UnitTests" />
   </ItemGroup>
 
 </Project>
