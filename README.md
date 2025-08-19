@@ -95,8 +95,7 @@ Editar `appsettings.json` en **Million.WebApi**:
 🎨 Frontend -- Next.js 15 
 
 1. **Instalar dependencias**
-   ```
-   bash   
+   ```bash   
    cd million-front    
    npm install
    ```
@@ -127,7 +126,9 @@ Editar `appsettings.json` en **Million.WebApi**:
 
 ## ✅ Pruebas
 
-### Backend Ejecutar pruebas unitarias con NUnit/Moq:
+### Backend 
+
+Ejecutar pruebas unitarias con NUnit/Moq:
 
 ``` bash
 cd Million.UnitTests
