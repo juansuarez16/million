@@ -49,6 +49,7 @@ cd million
 Editar `appsettings.json` en **Million.WebApi**:
 
 
+```json
 {
   "Mongo": {
     "ConnectionString": "mongodb://localhost:27017",
@@ -59,6 +60,7 @@ Editar `appsettings.json` en **Million.WebApi**:
     "MinimumLevel": "Information"
   }
 }
+```
 
 
 2.  **Precarga de datos (Seed)**
