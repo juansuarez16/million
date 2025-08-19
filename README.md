@@ -39,13 +39,23 @@ de ejemplo) y frontend moderno con Tailwind v4 + Flowbite + React Query.
 🔧 Clonar repositorio
 
 ``` bash
-git clone https://github.com/usuario/million-fullstack.git
-cd million-fullstack
+git clone https://github.com/juansuarez16/million.git
+cd million
 ```
 
-🔧 Backend -- API .NET 8 1. **Configuración** Editar `appsettings.json`
-en `Million.WebApi`:
-`json    {      "Mongo": {        "ConnectionString": "mongodb://localhost:27017",        "Database": "MillionDb",        "PropertiesCollection": "Properties"      },      "Serilog": {        "MinimumLevel": "Information"      }    }`
+🔧 Backend – API .NET 8
+1. Configuración
+Editar el archivo appsettings.json en Million.WebApi:
+{
+  "Mongo": {
+    "ConnectionString": "mongodb://localhost:27017",
+    "Database": "MillionDb",
+    "PropertiesCollection": "Properties"
+  },
+  "Serilog": {
+    "MinimumLevel": "Information"
+  }
+}
 
 2.  **Precarga de datos (Seed)**
 
