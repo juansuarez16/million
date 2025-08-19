@@ -96,8 +96,8 @@ Editar `appsettings.json` en **Million.WebApi**:
 
 1. **Instalar dependencias**
    ```
-   `bash    cd million-front`    
-    `npm install`
+   bash    cd million-front    
+    npm install
    ```
 3.  **Configurar API** Crear `.env.local` en `million-front/`:
 
