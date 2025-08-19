@@ -13,7 +13,7 @@ public sealed class SeedMongoHostedService : IHostedService
     private readonly MongoOptions _options;
     private readonly ILogger<SeedMongoHostedService> _log;
 
-    // Pool primario: fotos reales (Unsplash). Usaremos HEAD para validar.
+   
     private static readonly string[] primaryImages = new[]
     {
         "https://images.unsplash.com/photo-1570129477492-45c003edd2be",
@@ -59,7 +59,6 @@ public sealed class SeedMongoHostedService : IHostedService
         "https://images.unsplash.com/photo-1460353581641-37baddab0fa2"
     };
 
-    // Alternativas por consulta (si falla la primaria)
     private static readonly string[] fallbackQueries = new[]
     {
         "house", "apartment", "villa", "condo", "real-estate", "architecture", "interior"
@@ -97,10 +96,8 @@ public sealed class SeedMongoHostedService : IHostedService
 
     private static async Task<string> GetImageUrlAsync(int index, CancellationToken ct)
     {
-        // 1) candidata primaria validada
         var primary = BuildPrimary(primaryImages[Math.Abs(index) % primaryImages.Length]);
 
-        // 2) si falla la primaria, probamos 2-3 queries alternativas
         var q1 = BuildFallback(fallbackQueries[Math.Abs(index) % fallbackQueries.Length], index);
         var q2 = BuildFallback(fallbackQueries[(Math.Abs(index) + 3) % fallbackQueries.Length], index + 777);
 
@@ -118,7 +115,6 @@ public sealed class SeedMongoHostedService : IHostedService
     {
         var col = _ctx.Db.GetCollection<PropertyDocument>(_options.PropertiesCollection);
 
-        // --- MIGRACIÓN: si hay docs con picsum, reemplaza imágenes por URLs validadas ---
         var existing = await col.Find(FilterDefinition<PropertyDocument>.Empty)
                                 .Project(x => new { x.Id, x.Images })
                                 .ToListAsync(ct);
@@ -134,7 +130,7 @@ public sealed class SeedMongoHostedService : IHostedService
                 if (!hasPicsum) { i++; continue; }
 
                 var main = await GetImageUrlAsync(i, ct);
-                var alt = await GetImageUrlAsync(i + 50, ct);
+                var alt  = await GetImageUrlAsync(i + 50, ct);
 
                 var newImages = new List<PropertyImageDocument>
                 {
@@ -148,9 +144,9 @@ public sealed class SeedMongoHostedService : IHostedService
             }
 
             _log.LogInformation("Image migration completed.");
-            return; // no reseed, solo migración
+            return; 
         }
-        // --- FIN MIGRACIÓN ---
+     
 
         var count = await col.CountDocumentsAsync(FilterDefinition<PropertyDocument>.Empty, cancellationToken: ct);
         if (count > 0)
@@ -193,7 +189,7 @@ public sealed class SeedMongoHostedService : IHostedService
 
             // ⬇️ URLs validadas (sin 404)
             var main = await GetImageUrlAsync(idx, ct);
-            var alt = await GetImageUrlAsync(idx + 50, ct);
+            var alt  = await GetImageUrlAsync(idx + 50, ct);
 
             var images = new List<PropertyImageDocument>
             {
