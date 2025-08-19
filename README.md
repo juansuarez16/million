@@ -48,7 +48,7 @@ cd million
 
 Editar `appsettings.json` en **Million.WebApi**:
 
-```json
+
 {
   "Mongo": {
     "ConnectionString": "mongodb://localhost:27017",
