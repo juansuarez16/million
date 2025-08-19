@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* opcional: helpers */
-.input { @apply w-full rounded-xl border border-slate-300 bg-white px-3 py-2 focus:outline-none focus:ring; }
-.btn { @apply px-3 py-2 rounded-xl bg-slate-900 text-white disabled:opacity-40; }
+
+@import "flowbite";
+
+@import "tailwindcss";
+
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../../.flowbite-react/class-list.json";
+@layer components {
+  .input { @apply w-full rounded-xl border border-slate-300/80 bg-white px-3 py-2 focus:outline-none focus:ring focus:ring-slate-200; }
+  .btn { @apply px-3 py-2 rounded-xl bg-slate-900 text-white disabled:opacity-40; }
+  .btn-primary { @apply inline-flex items-center rounded-xl bg-slate-900 px-4 py-2 text-white hover:opacity-90; }
+  .card { @apply rounded-2xl bg-white shadow; }
+}

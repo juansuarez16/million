@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" fill="currentColor" aria-label="Million">
+  <!-- puntos -->
+  <circle cx="28" cy="32" r="6"/>
+  <circle cx="332" cy="32" r="6"/>
+  <!-- palabra -->
+  <text x="180" y="40"
+        font-family="Inter, Poppins, Segoe UI, Arial, sans-serif"
+        font-weight="700"
+        font-size="36"
+        letter-spacing="6"
+        text-anchor="middle">MILLION</text>
+</svg>

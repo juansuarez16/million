@@ -1,23 +1,39 @@
-import { PagedResult, PropertyDto, PropertyListFilters } from "./model";
+import type { PropertyDto, PropertyListFilters, PagedResult } from './model';
 
-const base = process.env.NEXT_PUBLIC_API_BASE!;
+const baseUrl = () => process.env.NEXT_PUBLIC_API_BASE?.replace(/\/+$/, '') ?? '';
 
-const qs = (params: Record<string, string | number | boolean | undefined | null>) =>
-  Object.entries(params)
-    .filter(([, v]) => v !== undefined && v !== null && v !== "")
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
-    .join("&");
+const buildQuery = (filters: PropertyListFilters) => {
+  const params = new URLSearchParams();
+  const set = (k: string, v: string | number | undefined) => {
+    if (v !== undefined && v !== '') params.set(k, String(v));
+  };
+  set('name', filters.name);
+  set('address', filters.address);
+  set('minPrice', filters.minPrice);
+  set('maxPrice', filters.maxPrice);
+  set('sort', filters.sort);
+  set('page', filters.page ?? 1);
+  set('pageSize', filters.pageSize ?? 12);
+  return params.toString();
+};
 
-export async function fetchProperties(filters: PropertyListFilters) {
-  const url = `${base}/properties?${qs(filters)}`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed ${res.status}`);
-  return (await res.json()) as PagedResult<PropertyDto>;
+export async function fetchProperties(filters: PropertyListFilters): Promise<PagedResult<PropertyDto>> {
+  const qs = buildQuery(filters);
+  const url = `${baseUrl()}/properties${qs ? `?${qs}` : ''}`;
+  const res = await fetch(url, { method: 'GET' });
+  if (!res.ok) {
+    const msg = await res.text().catch(() => '');
+    throw new Error(`Request failed: ${res.status}${msg ? ` ${msg}` : ''}`);
+  }
+  return res.json();
 }
 
-export async function fetchPropertyById(id: string) {
-  const res = await fetch(`${base}/properties/${id}`, { cache: "no-store" });
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`Failed ${res.status}`);
-  return (await res.json()) as PropertyDto;
+export async function fetchPropertyById(id: string): Promise<PropertyDto> {
+  const url = `${baseUrl()}/properties/${encodeURIComponent(id)}`;
+  const res = await fetch(url, { method: 'GET' });
+  if (!res.ok) {
+    const msg = await res.text().catch(() => '');
+    throw new Error(`Request failed: ${res.status}${msg ? ` ${msg}` : ''}`);
+  }
+  return res.json();
 }

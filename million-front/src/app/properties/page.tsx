@@ -21,7 +21,7 @@ export default function PropertiesPage() {
             <p className="text-slate-600">No results.</p>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {data.items.map((p) => <PropertyCard key={p.id} p={p} />)}
+              {data.items.map((p, i) => <PropertyCard key={p.id} p={p} priority={i < 6} />)}
             </div>
           )}
           <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPage={paginate} />
