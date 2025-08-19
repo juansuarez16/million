@@ -144,8 +144,10 @@ cd million-front
 npm test
 ```
 
-Incluye pruebas para: - FiltersBar (interacciones) - api.fetchProperties
-(querystring correcto) - PropertyCard (render e imagen)
+Incluye pruebas para: 
+- FiltersBar (interacciones)
+- api.fetchProperties (querystring correcto)
+- PropertyCard (render e imagen)
 
 📸 Funcionalidades clave 
 - Filtrar propiedades por nombre, dirección,rango de precio, orden. - Paginación con Flowbite.
