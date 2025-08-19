@@ -5,10 +5,15 @@ Next.js 15 (TypeScript) para el frontend. Incluye arquitectura limpia,
 MongoDB como base de datos, precarga automática de datos (24 propiedades
 de ejemplo) y frontend moderno con Tailwind v4 + Flowbite + React Query.
 
-🚀 Tecnologías usadas \### Backend - ASP.NET Core 8 (Web API) -
-MongoDB.Driver - Arquitectura limpia (Domain, Application,
-Infrastructure, WebApi) - Precarga automática de datos
-(IHostedService) - Swagger + Serilog
+## 🚀 Tecnologías usadas
+
+### 🔙 Backend
+
+- ASP.NET Core 8 (Web API)  
+- MongoDB.Driver  
+- Arquitectura limpia (Domain, Application, Infrastructure, WebApi)  
+- Precarga automática de datos (`IHostedService`)  
+- Swagger + Serilog  
 
 ### Frontend
 
