@@ -44,8 +44,11 @@ cd million
 ```
 
 🔧 Backend – API .NET 8
-1. Configuración
-Editar el archivo appsettings.json en Million.WebApi:
+### 1. Configuración
+
+Editar `appsettings.json` en **Million.WebApi**:
+
+```json
 {
   "Mongo": {
     "ConnectionString": "mongodb://localhost:27017",
