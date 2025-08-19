@@ -147,16 +147,18 @@ npm test
 Incluye pruebas para: - FiltersBar (interacciones) - api.fetchProperties
 (querystring correcto) - PropertyCard (render e imagen)
 
-📸 Funcionalidades clave - Filtrar propiedades por nombre, dirección,
-rango de precio, orden. - Paginación con Flowbite. - Navbar con logo y
-links activos. - Landing page con Hero Section y CTA. - Imágenes
-optimizadas con next/image y shimmer placeholder.
+📸 Funcionalidades clave 
+- Filtrar propiedades por nombre, dirección,rango de precio, orden. - Paginación con Flowbite.
+- Navbar con logo y links activos.
+- Landing page con Hero Section y CTA.
+- Imágenes optimizadas con next/image y shimmer placeholder.
 
-📝 Notas finales - Gracias al seed automático, no es necesario importar
-scripts ni bases de datos manualmente. - En un entorno real, el seed se
-gestionaría como migraciones controladas o scripts por entorno (Dev,
-Staging, Prod). - La aplicación no abre automáticamente el navegador.
-Debe abrirse manualmente: - Backend: 👉 https://localhost:5001/swagger -
-Frontend: 👉 http://localhost:3000/ - El frontend está preparado para
-conectarse a cualquier API que exponga el contrato definido en
+📝 Notas finales 
+- Gracias al seed automático, no es necesario importar scripts ni bases de datos manualmente.
+- En un entorno real, el seed se gestionaría como migraciones controladas o scripts por entorno (Dev,Staging, Prod).
+- Elfrontend no abre automáticamente el navegador.
+Debe abrirse manualmente:
+- Backend: 👉 https://localhost:5001/swagger
+- Frontend: 👉 http://localhost:3000/
+- El frontend está preparado para conectarse a cualquier API que exponga el contrato definido en
 `Million.WebApi`.
