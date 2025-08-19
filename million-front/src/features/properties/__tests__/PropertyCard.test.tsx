@@ -12,14 +12,14 @@ describe('PropertyCard', () => {
     imageUrl: 'https://picsum.photos/seed/p1/600/400'
   };
 
-  it('renderiza nombre dirección y precio', () => {
+  it('renderiza nombre, dirección y precio', () => {
     render(<PropertyCard property={property} />);
     expect(screen.getByText('Loft Poblado')).toBeInTheDocument();
     expect(screen.getByText(/Medellín, Antioquia/i)).toBeInTheDocument();
     expect(screen.getByText(/350/)).toBeInTheDocument();
   });
 
-  it('renderiza imagen con alt igual al nombre', () => {
+  it('renderiza imagen con alt igual al nombre y src remoto', () => {
     render(<PropertyCard property={property} />);
     const img = screen.getByRole('img', { name: /loft poblado/i });
     expect(img).toHaveAttribute('src', property.imageUrl);

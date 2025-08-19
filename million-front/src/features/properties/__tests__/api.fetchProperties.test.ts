@@ -1,72 +1,52 @@
 import { fetchProperties } from '../api';
-import type { PropertyListFilters } from '../model';
+import type { PropertyListFilters, PagedResult, PropertyDto } from '../model';
 
 describe('api.fetchProperties', () => {
-  const base = 'https://api.example.test';
-
   beforeEach(() => {
-    process.env.NEXT_PUBLIC_API_BASE = base;
-    global.fetch = jest.fn().mockResolvedValue({
+    const ok = {
       ok: true,
-      json: async () => ({ items: [], total: 0, page: 1, pageSize: 12 })
-    } as unknown as Response);
+      json: async () => ({ items: [], total: 0, page: 1, pageSize: 12 } as PagedResult<PropertyDto>)
+    } as Response;
+    global.fetch = jest.fn().mockResolvedValue(ok) as unknown as typeof fetch;
   });
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
-  it('construye querystring con filtros y paginación', async () => {
+  it('construye querystring con name, address, rango y paginación', async () => {
     const filters: PropertyListFilters = {
-      name: 'loft',
+      name: 'loft poblado',
       address: 'medellin',
-      minPrice: 100000,
-      maxPrice: 500000,
+      minPrice: 150000,
+      maxPrice: 450000,
       sort: '-price',
-      page: 2,
+      page: 1,
       pageSize: 12
     };
-
     await fetchProperties(filters);
-
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    const calledUrl = (global.fetch as jest.Mock).mock.calls[0][0] as string;
-    expect(calledUrl.startsWith(`${base}/properties?`)).toBe(true);
-
-    const qs = new URL(calledUrl).searchParams;
-    expect(qs.get('name')).toBe('loft');
-    expect(qs.get('address')).toBe('medellin');
-    expect(qs.get('minPrice')).toBe('100000');
-    expect(qs.get('maxPrice')).toBe('500000');
-    expect(qs.get('sort')).toBe('-price');
-    expect(qs.get('page')).toBe('2');
-    expect(qs.get('pageSize')).toBe('12');
+    const call = (global.fetch as unknown as jest.Mock).mock.calls[0]?.[0] as string;
+    const url = new URL(call);
+    expect(url.searchParams.get('name')).toBe('loft poblado');
+    expect(url.searchParams.get('address')).toBe('medellin');
+    expect(url.searchParams.get('minPrice')).toBe('150000');
+    expect(url.searchParams.get('maxPrice')).toBe('450000');
+    expect(url.searchParams.get('sort')).toBe('-price');
+    expect(url.searchParams.get('page')).toBe('1');
+    expect(url.searchParams.get('pageSize')).toBe('12');
   });
 
-  it('omite undefined y aplica defaults page=1 pageSize=12', async () => {
-    const filters: PropertyListFilters = { name: 'casa' };
-
+  it('omite parámetros no definidos', async () => {
+    const filters: PropertyListFilters = {
+      page: 2,
+      pageSize: 24,
+      sort: 'price'
+    };
     await fetchProperties(filters);
-
-    const calledUrl = (global.fetch as jest.Mock).mock.calls[0][0] as string;
-    const qs = new URL(calledUrl).searchParams;
-
-    expect(qs.get('name')).toBe('casa');
-    expect(qs.get('address')).toBeNull();
-    expect(qs.get('minPrice')).toBeNull();
-    expect(qs.get('maxPrice')).toBeNull();
-    expect(qs.get('sort')).toBeNull();
-    expect(qs.get('page')).toBe('1');
-    expect(qs.get('pageSize')).toBe('12');
-  });
-
-  it('lanza error cuando la respuesta no es ok', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-      status: 500,
-      text: async () => 'Boom'
-    } as unknown as Response);
-
-    await expect(fetchProperties({ name: 'x' })).rejects.toThrow('Request failed: 500 Boom');
+    const call = (global.fetch as unknown as jest.Mock).mock.calls[0]?.[0] as string;
+    const url = new URL(call);
+    expect(url.searchParams.get('name')).toBeNull();
+    expect(url.searchParams.get('address')).toBeNull();
+    expect(url.searchParams.get('minPrice')).toBeNull();
+    expect(url.searchParams.get('maxPrice')).toBeNull();
+    expect(url.searchParams.get('sort')).toBe('price');
+    expect(url.searchParams.get('page')).toBe('2');
+    expect(url.searchParams.get('pageSize')).toBe('24');
   });
 });

@@ -22,29 +22,9 @@ jest.mock('next/image', () => ({
     onLoadingComplete?: unknown;
     loader?: unknown;
   } & Record<string, unknown>) => {
-    const {
-      src,
-      alt = '',
-      width,
-      height,
-      className,
-      style,
-      loading,
-      referrerPolicy
-    } = props;
-
+    const { src, alt = '', width, height, className, style, loading, referrerPolicy } = props;
     const resolved = typeof src === 'string' ? src : src?.src ?? '';
-
-    return React.createElement('img', {
-      src: resolved,
-      alt,
-      width,
-      height,
-      className,
-      style,
-      loading,
-      referrerPolicy
-    });
+    return React.createElement('img', { src: resolved, alt, width, height, className, style, loading, referrerPolicy });
   }
 }));
 
