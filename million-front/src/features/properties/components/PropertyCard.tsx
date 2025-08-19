@@ -3,21 +3,32 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "flowbite-react";
 import { shimmerDataURL } from "@/shared/ui/imagePlaceholder";
+import { useState } from "react";
 
 export default function PropertyCard({ p, priority = false }: { p: PropertyDto; priority?: boolean }) {
+  const [error] = useState(false);
+  const fallback = "/fallback-property.svg";
+  const [src, setSrc] = useState(p.imageUrl);
   return (
     <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow dark:border-slate-800">
       <div className="relative h-48 w-full">
-        <Image
-          src={p.imageUrl}
-          alt={p.name}
-          fill
-          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-          className="object-cover"
-          priority={priority}
-          placeholder="blur"
-          blurDataURL={shimmerDataURL(16, 12)}
-        />
+        {!error ? (
+          <Image
+  src={src}
+  alt={p.name}
+  fill
+  sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+  className="object-cover"
+  priority={priority}
+  placeholder="blur"
+  blurDataURL={shimmerDataURL(16, 12)}
+  onError={() => { if (src !== fallback) setSrc(fallback); }}
+/>
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gray-200 dark:bg-gray-700">
+            <span className="text-sm text-gray-600 dark:text-gray-300">Image not found (404)</span>
+          </div>
+        )}
       </div>
       <h5 className="text-base font-semibold tracking-tight">{p.name}</h5>
       <p className="text-sm text-slate-600 dark:text-slate-400">{p.address}</p>
