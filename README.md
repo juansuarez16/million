@@ -134,7 +134,7 @@ dotnet test
 
 Frontend
 
-Usamos Jest + Testing Library + MSW.
+Usamos Jest + Testing Library
 
 cd million-front
 npm test
@@ -148,7 +148,6 @@ api.fetchProperties (querystring correcto)
 
 PropertyCard (render e imagen)
 
-(Opcional) página /properties con MSW
 
 📸 Funcionalidades clave
 
