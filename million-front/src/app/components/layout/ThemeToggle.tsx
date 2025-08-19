@@ -24,7 +24,7 @@ export default function ThemeToggle() {
     setIsDark(next);
   };
 
-  if (!mounted) return null; // evita mismatch SSR
+  if (!mounted) return null;
 
   return (
     <Button color="gray" size="sm" onClick={toggle} aria-label="Toggle theme">

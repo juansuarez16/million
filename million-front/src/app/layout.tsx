@@ -27,9 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: setTheme }} />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
       </head>
-      {/* 👇 Añadí las clases dark: al body */}
+      
       <body className="flex min-h-screen flex-col bg-slate-50 text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100">
-        {/* 👇 Providers envuelve todo para que Navbar/Footer también usen Flowbite */}
+        
         <Providers>
           <Navbar />
           <main className="flex-1 mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
