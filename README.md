@@ -92,16 +92,20 @@ Editar `appsettings.json` en **Million.WebApi**:
 
     Por defecto: 👉 https://localhost:5001/swagger
 
-🎨 Frontend -- Next.js 15 1. **Instalar dependencias**
-`bash    cd million-front    npm install`
+🎨 Frontend -- Next.js 15 
 
-2.  **Configurar API** Crear `.env.local` en `million-front/`:
+1. **Instalar dependencias**
+   ```
+   `bash    cd million-front`    
+    `npm install`
+   ```
+3.  **Configurar API** Crear `.env.local` en `million-front/`:
 
     ``` env
     NEXT_PUBLIC_API_BASE=http://localhost:5001
     ```
 
-3.  **Ejecutar en desarrollo**
+4.  **Ejecutar en desarrollo**
 
     ``` bash
     npm run dev
@@ -113,7 +117,7 @@ Editar `appsettings.json` en **Million.WebApi**:
     el navegador. Debe abrirse manualmente y colocar: 👉
     http://localhost:3000/
 
-4.  **Build & producción**
+5.  **Build & producción**
 
     ``` bash
     npm run build
