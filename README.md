@@ -125,7 +125,9 @@ Editar `appsettings.json` en **Million.WebApi**:
     npm run start
     ```
 
-✅ Pruebas \### Backend Ejecutar pruebas unitarias con NUnit/Moq:
+## ✅ Pruebas
+
+### Backend Ejecutar pruebas unitarias con NUnit/Moq:
 
 ``` bash
 cd Million.UnitTests
