@@ -43,8 +43,8 @@ git clone https://github.com/juansuarez16/million.git
 cd million
 ```
 
-🔧 Backend – API .NET 8
-### 1. Configuración
+🔧 Backend – API .NET 8  
+1. Configuración  
 
 Editar `appsettings.json` en **Million.WebApi**:
 
