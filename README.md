@@ -84,7 +84,6 @@ Código interno único.
 
 0–2 trazas históricas (PropertyTraceDocument).
 
-De esta forma, al ejecutar la aplicación por primera vez ya se tienen datos listos para consultar desde el frontend.
 👉 En un entorno real este proceso se manejaría con scripts controlados por entorno, pero para efectos de esta prueba se dejó siempre habilitado.
 
 3. Ejecutar API
@@ -93,6 +92,10 @@ dotnet run
 
 
 Por defecto: 👉 https://localhost:5001/swagger
+
+⚠️ Nota importante:
+La API no abre automáticamente el navegador.
+Debe abrirse manualmente y pegar la URL en el navegador.
 
 🎨 Frontend – Next.js 15
 1. Instalar dependencias
@@ -109,7 +112,13 @@ NEXT_PUBLIC_API_BASE=http://localhost:5001
 npm run dev
 
 
-Abrir 👉 http://localhost:3000
+El frontend corre por defecto en: 👉 http://localhost:3000
+
+⚠️ Nota importante:
+La aplicación frontend no abre automáticamente el navegador.
+Debe abrirse manualmente y colocar:
+
+http://localhost:3000/
 
 4. Build & producción
 npm run build
@@ -118,14 +127,14 @@ npm run start
 ✅ Pruebas
 Backend
 
-Ejecutar pruebas unitarias con NUnit/Moq:
+Ejecutar pruebas unitarias con xUnit/Moq:
 
 cd Million.UnitTests
 dotnet test
 
 Frontend
 
-Usamos Jest + Testing Library.
+Usamos Jest + Testing Library + MSW.
 
 cd million-front
 npm test
@@ -139,6 +148,7 @@ api.fetchProperties (querystring correcto)
 
 PropertyCard (render e imagen)
 
+(Opcional) página /properties con MSW
 
 📸 Funcionalidades clave
 
@@ -152,11 +162,16 @@ Landing page con Hero Section y CTA.
 
 Imágenes optimizadas con next/image y shimmer placeholder.
 
-
 📝 Notas finales
 
 Gracias al seed automático, no es necesario importar scripts ni bases de datos manualmente.
 
 En un entorno real, el seed se gestionaría como migraciones controladas o scripts por entorno (Dev, Staging, Prod).
+
+La aplicación no abre automáticamente el navegador. Debe abrirse manualmente:
+
+Backend: 👉 https://localhost:5001/swagger
+
+Frontend: 👉 http://localhost:3000/
 
 El frontend está preparado para conectarse a cualquier API que exponga el contrato definido en Million.WebApi.
